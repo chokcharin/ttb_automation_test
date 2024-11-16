@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1 (Python 3.12.6 on darwin)" generated="2024-11-16T13:34:29.746277" rpa="false" schemaversion="5">
+<suite id="s1" name="Get User" source="/Users/513007542/ttb_automation_test/testcase/api/get_user.robot">
+<test id="s1-t1" name="Get user profile success" line="6">
+<kw name="Send Get Request For Users" owner="get_user">
+<kw name="Send Get Request" owner="common">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-11-16T13:34:29.849005" level="INFO">Creating Session using : alias=get_data, url=https://reqres.in/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>alias=get_data</arg>
+<arg>url=${url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-11-16T13:34:29.848941" elapsed="0.000135"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-11-16T13:34:29.849231" level="INFO">${endpoint} = users/12</msg>
+<var>${endpoint}</var>
+<arg>'${params}'=='${NULL}'</arg>
+<arg>${endpoint}/${value}</arg>
+<arg>${endpoint}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-11-16T13:34:29.849140" elapsed="0.000101"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2024-11-16T13:34:29.996095" level="INFO">GET Request : url=https://reqres.in/api/users/12 
+ path_url=/api/users/12 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2024-11-16T13:34:29.996219" level="INFO">GET Response : url=https://reqres.in/api/users/12 
+ status=200, reason=OK 
+ headers={'Date': 'Sat, 16 Nov 2024 06:34:30 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Report-To': '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1731735244&amp;sid=c4c9725f-1ab0-44d8-820f-430df2718e11&amp;s=RCmmEqEpm3HcJ2ux05QlQ1xZrGZn%2B11d5DLfeyMk6Nk%3D"}]}', 'Reporting-Endpoints': 'heroku-nel=https://nel.heroku.com/reports?ts=1731735244&amp;sid=c4c9725f-1ab0-44d8-820f-430df2718e11&amp;s=RCmmEqEpm3HcJ2ux05QlQ1xZrGZn%2B11d5DLfeyMk6Nk%3D', 'Nel': '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Etag': 'W/"156-dRpOqAStViWxQQvYl7n1A1GXGFw"', 'Via': '1.1 vegur', 'Cache-Control': 'max-age=14400', 'CF-Cache-Status': 'HIT', 'Age': '3626', 'Vary': 'Accept-Encoding', 'Server': 'cloudflare', 'CF-RAY': '8e3574a16e11a045-SIN', 'Content-Encoding': 'gzip', 'server-timing': 'cfL4;desc="?proto=TCP&amp;rtt=36221&amp;sent=4&amp;recv=6&amp;lost=0&amp;retrans=0&amp;sent_bytes=2837&amp;recv_bytes=771&amp;delivery_rate=94544&amp;cwnd=247&amp;unsent_bytes=0&amp;cid=e3b6f67c4e9e51c2&amp;ts=64&amp;x=0"'} 
+ body={"data":{"id":12,"email":"rachel.howell@reqres.in","first_name":"Rachel","last_name":"Howell","avatar":"https://reqres.in/img/faces/12-image.jpg"},"support":{"url":"https://contentcaddy.io?utm_source=reqres&amp;utm_medium=json&amp;utm_campaign=referral","text":"Tired of writing endless social media content? Let Content Caddy generate it for you."}} 
+ </msg>
+<msg time="2024-11-16T13:34:29.996301" level="INFO">/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'reqres.in'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2024-11-16T13:34:29.996439" level="INFO">${resp_google} = &lt;Response [200]&gt;</msg>
+<var>${resp_google}</var>
+<arg>alias=get_data</arg>
+<arg>url=${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2024-11-16T13:34:29.849283" elapsed="0.147179"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-16T13:34:29.997154" level="INFO">${response_data} = {'data': {'id': 12, 'email': 'rachel.howell@reqres.in', 'first_name': 'Rachel', 'last_name': 'Howell', 'avatar': 'https://reqres.in/img/faces/12-image.jpg'}, 'support': {'url': 'https://contentcaddy.i...</msg>
+<var>${response_data}</var>
+<arg>${resp_google.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-16T13:34:29.996646" elapsed="0.000533"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-16T13:34:29.997815" level="INFO">${response_code} = 200</msg>
+<var>${response_code}</var>
+<arg>${resp_google.status_code}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-16T13:34:29.997287" elapsed="0.000550"/>
+</kw>
+<return>
+<value>${response_data}</value>
+<value>${response_code}</value>
+<status status="PASS" start="2024-11-16T13:34:29.997902" elapsed="0.000061"/>
+</return>
+<msg time="2024-11-16T13:34:29.998125" level="INFO">${response_data} = {'data': {'id': 12, 'email': 'rachel.howell@reqres.in', 'first_name': 'Rachel', 'last_name': 'Howell', 'avatar': 'https://reqres.in/img/faces/12-image.jpg'}, 'support': {'url': 'https://contentcaddy.i...</msg>
+<msg time="2024-11-16T13:34:29.998156" level="INFO">${response_code} = 200</msg>
+<var>${response_data}</var>
+<var>${response_code}</var>
+<arg>url=${reqres_url}</arg>
+<arg>endpoint=${users_endpoint}</arg>
+<arg>value=${value}</arg>
+<status status="PASS" start="2024-11-16T13:34:29.848606" elapsed="0.149567"/>
+</kw>
+<return>
+<value>${response_data}</value>
+<value>${response_code}</value>
+<status status="PASS" start="2024-11-16T13:34:29.998227" elapsed="0.000033"/>
+</return>
+<msg time="2024-11-16T13:34:29.998394" level="INFO">${response_data} = {'data': {'id': 12, 'email': 'rachel.howell@reqres.in', 'first_name': 'Rachel', 'last_name': 'Howell', 'avatar': 'https://reqres.in/img/faces/12-image.jpg'}, 'support': {'url': 'https://contentcaddy.i...</msg>
+<msg time="2024-11-16T13:34:29.998424" level="INFO">${response_code} = 200</msg>
+<var>${response_data}</var>
+<var>${response_code}</var>
+<arg>value=${12}</arg>
+<status status="PASS" start="2024-11-16T13:34:29.848349" elapsed="0.150091"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-11-16T13:34:29.998704" level="INFO">{'data': {'id': 12, 'email': 'rachel.howell@reqres.in', 'first_name': 'Rachel', 'last_name': 'Howell', 'avatar': 'https://reqres.in/img/faces/12-image.jpg'}, 'support': {'url': 'https://contentcaddy.io?utm_source=reqres&amp;utm_medium=json&amp;utm_campaign=referral', 'text': 'Tired of writing endless social media content? Let Content Caddy generate it for you.'}}</msg>
+<arg>${response_data}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-11-16T13:34:29.998585" elapsed="0.000156"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-11-16T13:34:29.998939" level="INFO">200</msg>
+<arg>${response_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-11-16T13:34:29.998852" elapsed="0.000117"/>
+</kw>
+<doc>To verify get user profile api will return correct data when trying to get profile of existing user</doc>
+<status status="PASS" start="2024-11-16T13:34:29.848009" elapsed="0.151068"/>
+</test>
+<test id="s1-t2" name="Get user profile but user not found" line="11">
+<kw name="Send Get Request For Users" owner="get_user">
+<kw name="Send Get Request" owner="common">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2024-11-16T13:34:30.000571" level="INFO">Creating Session using : alias=get_data, url=https://reqres.in/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>alias=get_data</arg>
+<arg>url=${url}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2024-11-16T13:34:30.000456" elapsed="0.000221"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2024-11-16T13:34:30.001013" level="INFO">${endpoint} = users/1234</msg>
+<var>${endpoint}</var>
+<arg>'${params}'=='${NULL}'</arg>
+<arg>${endpoint}/${value}</arg>
+<arg>${endpoint}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2024-11-16T13:34:30.000838" elapsed="0.000192"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2024-11-16T13:34:30.129574" level="INFO">GET Request : url=https://reqres.in/api/users/1234 
+ path_url=/api/users/1234 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2024-11-16T13:34:30.129638" level="INFO">GET Response : url=https://reqres.in/api/users/1234 
+ status=404, reason=Not Found 
+ headers={'Date': 'Sat, 16 Nov 2024 06:34:30 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '2', 'Connection': 'keep-alive', 'Report-To': '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1731738796&amp;sid=c4c9725f-1ab0-44d8-820f-430df2718e11&amp;s=f4yDK8Kc6YmPSJnqY%2F5UDszjpF0X04pKnc5ccl079rA%3D"}]}', 'Reporting-Endpoints': 'heroku-nel=https://nel.heroku.com/reports?ts=1731738796&amp;sid=c4c9725f-1ab0-44d8-820f-430df2718e11&amp;s=f4yDK8Kc6YmPSJnqY%2F5UDszjpF0X04pKnc5ccl079rA%3D', 'Nel': '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Etag': 'W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"', 'Via': '1.1 vegur', 'Cache-Control': 'max-age=14400', 'CF-Cache-Status': 'HIT', 'Age': '74', 'Vary': 'Accept-Encoding', 'Server': 'cloudflare', 'CF-RAY': '8e3574a24b71a053-SIN', 'server-timing': 'cfL4;desc="?proto=TCP&amp;rtt=30338&amp;sent=4&amp;recv=6&amp;lost=0&amp;retrans=0&amp;sent_bytes=2837&amp;recv_bytes=773&amp;delivery_rate=90773&amp;cwnd=251&amp;unsent_bytes=0&amp;cid=1a0b8bec3571a7e6&amp;ts=48&amp;x=0"'} 
+ body={} 
+ </msg>
+<msg time="2024-11-16T13:34:30.129683" level="INFO">/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'reqres.in'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2024-11-16T13:34:30.129757" level="INFO">${resp_google} = &lt;Response [404]&gt;</msg>
+<var>${resp_google}</var>
+<arg>alias=get_data</arg>
+<arg>url=${endpoint}</arg>
+<arg>params=${params}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=anything</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2024-11-16T13:34:30.001111" elapsed="0.128659"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-16T13:34:30.130179" level="INFO">${response_data} = {}</msg>
+<var>${response_data}</var>
+<arg>${resp_google.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-16T13:34:30.129881" elapsed="0.000312"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-16T13:34:30.130476" level="INFO">${response_code} = 404</msg>
+<var>${response_code}</var>
+<arg>${resp_google.status_code}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-16T13:34:30.130258" elapsed="0.000231"/>
+</kw>
+<return>
+<value>${response_data}</value>
+<value>${response_code}</value>
+<status status="PASS" start="2024-11-16T13:34:30.130521" elapsed="0.000027"/>
+</return>
+<msg time="2024-11-16T13:34:30.130634" level="INFO">${response_data} = {}</msg>
+<msg time="2024-11-16T13:34:30.130653" level="INFO">${response_code} = 404</msg>
+<var>${response_data}</var>
+<var>${response_code}</var>
+<arg>url=${reqres_url}</arg>
+<arg>endpoint=${users_endpoint}</arg>
+<arg>value=${value}</arg>
+<status status="PASS" start="2024-11-16T13:34:30.000118" elapsed="0.130545"/>
+</kw>
+<return>
+<value>${response_data}</value>
+<value>${response_code}</value>
+<status status="PASS" start="2024-11-16T13:34:30.130696" elapsed="0.000015"/>
+</return>
+<msg time="2024-11-16T13:34:30.130780" level="INFO">${response_data} = {}</msg>
+<msg time="2024-11-16T13:34:30.130798" level="INFO">${response_code} = 404</msg>
+<var>${response_data}</var>
+<var>${response_code}</var>
+<arg>value=${1234}</arg>
+<status status="PASS" start="2024-11-16T13:34:29.999681" elapsed="0.131127"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-11-16T13:34:30.130955" level="INFO">{}</msg>
+<arg>${response_data}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-11-16T13:34:30.130892" elapsed="0.000084"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-11-16T13:34:30.131106" level="INFO">404</msg>
+<arg>${response_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-11-16T13:34:30.131047" elapsed="0.000077"/>
+</kw>
+<doc>To verify get user profile api will return 404 not found when trying to get exist profile of not existing user</doc>
+<status status="PASS" start="2024-11-16T13:34:29.999268" elapsed="0.131926"/>
+</test>
+<status status="PASS" start="2024-11-16T13:34:29.746772" elapsed="0.384645"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="Get User">Get User</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
