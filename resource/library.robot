@@ -1,5 +1,8 @@
 *** Settings ***
 Library    BuiltIn
-Library    SeleniumLibrary
 Library    RequestsLibrary
 Library    Collections
+Library    DateTime
+Library    OperatingSystem
+Library    String
+Library    JSONLibrary

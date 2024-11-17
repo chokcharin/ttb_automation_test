@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ${CURDIR}/../../../ttb_automation_test/resource/library.robot
+Library    SeleniumLibrary
 
 *** Keywords ***
 Open Browser And Go To Destination URL

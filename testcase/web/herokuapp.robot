@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ${CURDIR}/../../../ttb_automation_test/resource/library.robot
 Resource    ${CURDIR}/../../../ttb_automation_test/keyword/web/herouapp/herokuapp.robot
+Library    SeleniumLibrary
 
 *** Variables ***
 ${destination_url}    https://the-internet.herokuapp.com/login

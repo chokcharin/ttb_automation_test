@@ -1,210 +1,689 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.1 (Python 3.12.6 on darwin)" generated="2024-11-16T13:34:29.746277" rpa="false" schemaversion="5">
-<suite id="s1" name="Get User" source="/Users/513007542/ttb_automation_test/testcase/api/get_user.robot">
-<test id="s1-t1" name="Get user profile success" line="6">
-<kw name="Send Get Request For Users" owner="get_user">
-<kw name="Send Get Request" owner="common">
-<kw name="Create Session" owner="RequestsLibrary">
-<msg time="2024-11-16T13:34:29.849005" level="INFO">Creating Session using : alias=get_data, url=https://reqres.in/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<arg>alias=get_data</arg>
-<arg>url=${url}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<status status="PASS" start="2024-11-16T13:34:29.848941" elapsed="0.000135"/>
-</kw>
-<kw name="Set Variable If" owner="BuiltIn">
-<msg time="2024-11-16T13:34:29.849231" level="INFO">${endpoint} = users/12</msg>
-<var>${endpoint}</var>
-<arg>'${params}'=='${NULL}'</arg>
-<arg>${endpoint}/${value}</arg>
-<arg>${endpoint}</arg>
-<doc>Sets variable based on the given condition.</doc>
-<status status="PASS" start="2024-11-16T13:34:29.849140" elapsed="0.000101"/>
-</kw>
-<kw name="GET On Session" owner="RequestsLibrary">
-<msg time="2024-11-16T13:34:29.996095" level="INFO">GET Request : url=https://reqres.in/api/users/12 
- path_url=/api/users/12 
- headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
- body=None 
- </msg>
-<msg time="2024-11-16T13:34:29.996219" level="INFO">GET Response : url=https://reqres.in/api/users/12 
- status=200, reason=OK 
- headers={'Date': 'Sat, 16 Nov 2024 06:34:30 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Report-To': '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1731735244&amp;sid=c4c9725f-1ab0-44d8-820f-430df2718e11&amp;s=RCmmEqEpm3HcJ2ux05QlQ1xZrGZn%2B11d5DLfeyMk6Nk%3D"}]}', 'Reporting-Endpoints': 'heroku-nel=https://nel.heroku.com/reports?ts=1731735244&amp;sid=c4c9725f-1ab0-44d8-820f-430df2718e11&amp;s=RCmmEqEpm3HcJ2ux05QlQ1xZrGZn%2B11d5DLfeyMk6Nk%3D', 'Nel': '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Etag': 'W/"156-dRpOqAStViWxQQvYl7n1A1GXGFw"', 'Via': '1.1 vegur', 'Cache-Control': 'max-age=14400', 'CF-Cache-Status': 'HIT', 'Age': '3626', 'Vary': 'Accept-Encoding', 'Server': 'cloudflare', 'CF-RAY': '8e3574a16e11a045-SIN', 'Content-Encoding': 'gzip', 'server-timing': 'cfL4;desc="?proto=TCP&amp;rtt=36221&amp;sent=4&amp;recv=6&amp;lost=0&amp;retrans=0&amp;sent_bytes=2837&amp;recv_bytes=771&amp;delivery_rate=94544&amp;cwnd=247&amp;unsent_bytes=0&amp;cid=e3b6f67c4e9e51c2&amp;ts=64&amp;x=0"'} 
- body={"data":{"id":12,"email":"rachel.howell@reqres.in","first_name":"Rachel","last_name":"Howell","avatar":"https://reqres.in/img/faces/12-image.jpg"},"support":{"url":"https://contentcaddy.io?utm_source=reqres&amp;utm_medium=json&amp;utm_campaign=referral","text":"Tired of writing endless social media content? Let Content Caddy generate it for you."}} 
- </msg>
-<msg time="2024-11-16T13:34:29.996301" level="INFO">/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'reqres.in'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(</msg>
-<msg time="2024-11-16T13:34:29.996439" level="INFO">${resp_google} = &lt;Response [200]&gt;</msg>
-<var>${resp_google}</var>
-<arg>alias=get_data</arg>
-<arg>url=${endpoint}</arg>
-<arg>params=${params}</arg>
-<arg>headers=${headers}</arg>
-<arg>expected_status=anything</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2024-11-16T13:34:29.849283" elapsed="0.147179"/>
+<robot generator="Robot 7.1 (Python 3.12.6 on darwin)" generated="2024-11-17T20:20:44.138332" rpa="false" schemaversion="5">
+<suite id="s1" name="Minimal" source="/Users/513007542/ttb_automation_test/testcase/mobile/minimal/minimal.robot">
+<test id="s1-t1" name="SAA" line="18">
+<kw name="Handle Calculate Date Time" owner="minimal">
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2024-11-17T20:20:44.283281" level="INFO">${current_date_time} = 17 Nov 2024 08 20 PM</msg>
+<var>${current_date_time}</var>
+<arg>result_format=%d %b %Y %I %M %p</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2024-11-17T20:20:44.283199" elapsed="0.000094"/>
 </kw>
 <kw name="Set Variable" owner="BuiltIn">
-<msg time="2024-11-16T13:34:29.997154" level="INFO">${response_data} = {'data': {'id': 12, 'email': 'rachel.howell@reqres.in', 'first_name': 'Rachel', 'last_name': 'Howell', 'avatar': 'https://reqres.in/img/faces/12-image.jpg'}, 'support': {'url': 'https://contentcaddy.i...</msg>
-<var>${response_data}</var>
-<arg>${resp_google.json()}</arg>
+<msg time="2024-11-17T20:20:44.283554" level="INFO">${day} = 17</msg>
+<var>${day}</var>
+<arg>${current_date_time.split()[0]}</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2024-11-16T13:34:29.996646" elapsed="0.000533"/>
+<status status="PASS" start="2024-11-17T20:20:44.283346" elapsed="0.000216"/>
 </kw>
 <kw name="Set Variable" owner="BuiltIn">
-<msg time="2024-11-16T13:34:29.997815" level="INFO">${response_code} = 200</msg>
-<var>${response_code}</var>
-<arg>${resp_google.status_code}</arg>
+<msg time="2024-11-17T20:20:44.283772" level="INFO">${month} = Nov</msg>
+<var>${month}</var>
+<arg>${current_date_time.split()[1]}</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2024-11-16T13:34:29.997287" elapsed="0.000550"/>
+<status status="PASS" start="2024-11-17T20:20:44.283601" elapsed="0.000177"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:44.283975" level="INFO">${year} = 2024</msg>
+<var>${year}</var>
+<arg>${current_date_time.split()[2]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:44.283812" elapsed="0.000170"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:44.284170" level="INFO">${hour} = 8</msg>
+<var>${hour}</var>
+<arg>${current_date_time.split()[3].lstrip('0')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:44.284015" elapsed="0.000162"/>
+</kw>
+<kw name="Convert To Integer" owner="BuiltIn">
+<msg time="2024-11-17T20:20:44.284268" level="INFO">${hour} = 8</msg>
+<var>${hour}</var>
+<arg>${hour}</arg>
+<doc>Converts the given item to an integer number.</doc>
+<status status="PASS" start="2024-11-17T20:20:44.284212" elapsed="0.000062"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-11-17T20:20:44.284452" level="INFO">${hour} = 9</msg>
+<var>${hour}</var>
+<arg>${hour}+${1}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-11-17T20:20:44.284307" elapsed="0.000151"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:44.284654" level="INFO">${minute} = 20</msg>
+<var>${minute}</var>
+<arg>${current_date_time.split()[4]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:44.284491" elapsed="0.000169"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:44.284868" level="INFO">${period} = PM</msg>
+<var>${period}</var>
+<arg>${current_date_time.split()[5]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:44.284694" elapsed="0.000181"/>
 </kw>
 <return>
-<value>${response_data}</value>
-<value>${response_code}</value>
-<status status="PASS" start="2024-11-16T13:34:29.997902" elapsed="0.000061"/>
+<value>${day}</value>
+<value>${month}</value>
+<value>${year}</value>
+<value>${hour}</value>
+<value>${minute}</value>
+<value>${period}</value>
+<status status="PASS" start="2024-11-17T20:20:44.284892" elapsed="0.000018"/>
 </return>
-<msg time="2024-11-16T13:34:29.998125" level="INFO">${response_data} = {'data': {'id': 12, 'email': 'rachel.howell@reqres.in', 'first_name': 'Rachel', 'last_name': 'Howell', 'avatar': 'https://reqres.in/img/faces/12-image.jpg'}, 'support': {'url': 'https://contentcaddy.i...</msg>
-<msg time="2024-11-16T13:34:29.998156" level="INFO">${response_code} = 200</msg>
-<var>${response_data}</var>
-<var>${response_code}</var>
-<arg>url=${reqres_url}</arg>
-<arg>endpoint=${users_endpoint}</arg>
-<arg>value=${value}</arg>
-<status status="PASS" start="2024-11-16T13:34:29.848606" elapsed="0.149567"/>
+<msg time="2024-11-17T20:20:44.284991" level="INFO">${day} = 17</msg>
+<msg time="2024-11-17T20:20:44.285001" level="INFO">${month} = Nov</msg>
+<msg time="2024-11-17T20:20:44.285010" level="INFO">${year} = 2024</msg>
+<msg time="2024-11-17T20:20:44.285018" level="INFO">${hour} = 9</msg>
+<msg time="2024-11-17T20:20:44.285026" level="INFO">${minute} = 20</msg>
+<msg time="2024-11-17T20:20:44.285033" level="INFO">${period} = PM</msg>
+<var>${day}</var>
+<var>${month}</var>
+<var>${year}</var>
+<var>${hour}</var>
+<var>${minute}</var>
+<var>${period}</var>
+<status status="PASS" start="2024-11-17T20:20:44.282895" elapsed="0.002143"/>
+</kw>
+<kw name="Open Application Set Up" owner="common">
+<kw name="Open Application" owner="AppiumLibrary">
+<arg>${appium_server}</arg>
+<arg>platformName=${platform_name}</arg>
+<arg>platformVersion=${platform_version}</arg>
+<arg>deviceName=${device_name}</arg>
+<arg>app=${app_name}</arg>
+<arg>automationName=${automation_name}</arg>
+<arg>autoGrantPermissions=true</arg>
+<arg>autoAcceptAlerts=true</arg>
+<arg>allowTestPackages=true</arg>
+<arg>newCommandTimeout=0</arg>
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://appium.io/docs/en/2.1/cli/args/
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | no     | alias             |
+| strict_ssl          | No     | allows you to send commands to an invalid certificate host like a self-signed one. |</doc>
+<status status="PASS" start="2024-11-17T20:20:44.285188" elapsed="6.813094"/>
+</kw>
+<status status="PASS" start="2024-11-17T20:20:44.285113" elapsed="6.813907"/>
+</kw>
+<kw name="Verify Landing Mininal Reminder Page" owner="minimal">
+<if>
+<branch type="IF" condition="${there_is_reminder}==${TRUE}">
+<kw name="Evaluate" owner="BuiltIn">
+<var>${is_string}</var>
+<arg>$title[0].isalpha()</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2024-11-17T20:20:51.102053" elapsed="0.000034"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<var>${title}</var>
+<arg>'${is_string}'=='${TRUE}'</arg>
+<arg>Convert To Title Case</arg>
+<arg>${title}</arg>
+<arg>ELSE</arg>
+<arg>Set Variable</arg>
+<arg>${title}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" start="2024-11-17T20:20:51.102260" elapsed="0.000016"/>
+</kw>
+<kw name="Find Reminder Item" owner="minimal">
+<arg>added_full_time_reminder=${added_full_time_reminder}</arg>
+<arg>title=${title}</arg>
+<status status="NOT RUN" start="2024-11-17T20:20:51.102581" elapsed="0.000019"/>
+</kw>
+<status status="NOT RUN" start="2024-11-17T20:20:51.101458" elapsed="0.001172"/>
+</branch>
+<branch type="ELSE">
+<kw name="Get Text" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:51.437449" level="INFO">Element 'xpath=//android.view.ViewGroup[@resource-id="com.avjindersinghsekhon.minimaltodo:id/toolbar"]/android.widget.TextView' text is 'Minimal' </msg>
+<msg time="2024-11-17T20:20:51.437573" level="INFO">xpath criteria: //android.view.ViewGroup[@resource-id="com.avjindersinghsekhon.minimaltodo:id/toolbar"]/android.widget.TextView</msg>
+<msg time="2024-11-17T20:20:51.437681" level="INFO">${test} = Minimal</msg>
+<var>${test}</var>
+<arg>locator=${login_page_title_locator}</arg>
+<doc>Get element text (for hybrid and mobile browser use `xpath` locator, others might cause problem)</doc>
+<status status="PASS" start="2024-11-17T20:20:51.102812" elapsed="0.334897"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:51.460300" level="INFO">xpath criteria: //android.widget.LinearLayout[@resource-id="com.avjindersinghsekhon.minimaltodo:id/toDoEmptyView"]/android.widget.ImageView</msg>
+<arg>locator=${application_locator}</arg>
+<arg>timeout=${timeout}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2024-11-17T20:20:51.437954" elapsed="0.022416"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:51.485161" level="INFO">xpath criteria: //android.support.v7.widget.bb/android.widget.ImageView</msg>
+<arg>locator=${setting_button_locator}</arg>
+<arg>timeout=${timeout}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2024-11-17T20:20:51.460551" elapsed="0.024779"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:52.036745" level="INFO">xpath criteria: //android.widget.ImageView[@resource-id="com.avjindersinghsekhon.minimaltodo:id/addToDoItemFAB"]</msg>
+<arg>locator=${add_reminder_button_locator}</arg>
+<arg>timeout=${timeout}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2024-11-17T20:20:51.485759" elapsed="0.551372"/>
+</kw>
+<status status="PASS" start="2024-11-17T20:20:51.102688" elapsed="0.934581"/>
+</branch>
+<status status="PASS" start="2024-11-17T20:20:51.101394" elapsed="0.935970"/>
+</if>
+<arg>there_is_reminder=${FALSE}</arg>
+<status status="PASS" start="2024-11-17T20:20:51.100421" elapsed="0.937049"/>
+</kw>
+<kw name="Add Mininal Reminder" owner="minimal">
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-11-17T20:20:52.039275" level="INFO">True</msg>
+<arg>${toggle_minial_reminder_on}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-11-17T20:20:52.039033" elapsed="0.000301"/>
+</kw>
+<kw name="Wait And Click Element" owner="common">
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:52.079085" level="INFO">xpath criteria: //android.widget.ImageView[@resource-id="com.avjindersinghsekhon.minimaltodo:id/addToDoItemFAB"]</msg>
+<arg>${locator}</arg>
+<arg>${timeout}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2024-11-17T20:20:52.039924" elapsed="0.039288"/>
+</kw>
+<kw name="Click Element" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:52.082789" level="INFO">Clicking element 'xpath=//android.widget.ImageView[@resource-id="com.avjindersinghsekhon.minimaltodo:id/addToDoItemFAB"]'.</msg>
+<msg time="2024-11-17T20:20:52.159348" level="INFO">xpath criteria: //android.widget.ImageView[@resource-id="com.avjindersinghsekhon.minimaltodo:id/addToDoItemFAB"]</msg>
+<arg>${locator}</arg>
+<doc>Click element identified by `locator`.</doc>
+<status status="PASS" start="2024-11-17T20:20:52.079592" elapsed="0.079853"/>
+</kw>
+<arg>locator=${add_reminder_button_locator}</arg>
+<arg>timeout=${timeout}</arg>
+<status status="PASS" start="2024-11-17T20:20:52.039503" elapsed="0.120076"/>
+</kw>
+<kw name="Wait And Input Text" owner="common">
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:53.279538" level="INFO">xpath criteria: //android.widget.EditText[@resource-id="com.avjindersinghsekhon.minimaltodo:id/userToDoEditText"]
+xpath criteria: //android.widget.EditText[@resource-id="com.avjindersinghsekhon.minimaltodo:id/userToDoEditText"]</msg>
+<arg>${locator}</arg>
+<arg>${timeout}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2024-11-17T20:20:52.160399" elapsed="1.119356"/>
+</kw>
+<kw name="Input Text" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:53.282726" level="INFO">Typing text '1ๅนสน' into text field 'xpath=//android.widget.EditText[@resource-id="com.avjindersinghsekhon.minimaltodo:id/userToDoEditText"]'</msg>
+<msg time="2024-11-17T20:20:53.318887" level="INFO">xpath criteria: //android.widget.EditText[@resource-id="com.avjindersinghsekhon.minimaltodo:id/userToDoEditText"]</msg>
+<arg>locator=${locator}</arg>
+<arg>text=${text}</arg>
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<status status="PASS" start="2024-11-17T20:20:53.280214" elapsed="0.038834"/>
+</kw>
+<arg>locator=${input_reminder_title_locator}</arg>
+<arg>text=${title}</arg>
+<arg>timeout=${timeout}</arg>
+<status status="PASS" start="2024-11-17T20:20:52.159815" elapsed="1.159388"/>
+</kw>
+<if>
+<branch type="IF" condition="'${toggle_minial_reminder_on}'=='${TRUE}'">
+<kw name="Wait And Click Element" owner="common">
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:53.971443" level="INFO">xpath criteria: //android.widget.Switch[@resource-id="com.avjindersinghsekhon.minimaltodo:id/toDoHasDateSwitchCompat"]</msg>
+<arg>${locator}</arg>
+<arg>${timeout}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2024-11-17T20:20:53.320821" elapsed="0.650838"/>
+</kw>
+<kw name="Click Element" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:53.974178" level="INFO">Clicking element 'xpath=//android.widget.Switch[@resource-id="com.avjindersinghsekhon.minimaltodo:id/toDoHasDateSwitchCompat"]'.</msg>
+<msg time="2024-11-17T20:20:54.024230" level="INFO">xpath criteria: //android.widget.Switch[@resource-id="com.avjindersinghsekhon.minimaltodo:id/toDoHasDateSwitchCompat"]</msg>
+<arg>${locator}</arg>
+<doc>Click element identified by `locator`.</doc>
+<status status="PASS" start="2024-11-17T20:20:53.971945" elapsed="0.052381"/>
+</kw>
+<arg>locator=${add_reminder_toggle_locator}</arg>
+<arg>timeout=${timeout}</arg>
+<status status="PASS" start="2024-11-17T20:20:53.320018" elapsed="0.704390"/>
+</kw>
+<status status="PASS" start="2024-11-17T20:20:53.319410" elapsed="0.705027"/>
+</branch>
+<status status="PASS" start="2024-11-17T20:20:53.319353" elapsed="0.705125"/>
+</if>
+<kw name="Handle Calculate Date Time" owner="minimal">
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2024-11-17T20:20:54.025325" level="INFO">${current_date_time} = 17 Nov 2024 08 20 PM</msg>
+<var>${current_date_time}</var>
+<arg>result_format=%d %b %Y %I %M %p</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.025084" elapsed="0.000259"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.025974" level="INFO">${day} = 17</msg>
+<var>${day}</var>
+<arg>${current_date_time.split()[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.025445" elapsed="0.000544"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.026486" level="INFO">${month} = Nov</msg>
+<var>${month}</var>
+<arg>${current_date_time.split()[1]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.026071" elapsed="0.000430"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.027188" level="INFO">${year} = 2024</msg>
+<var>${year}</var>
+<arg>${current_date_time.split()[2]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.026655" elapsed="0.000551"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.027937" level="INFO">${hour} = 8</msg>
+<var>${hour}</var>
+<arg>${current_date_time.split()[3].lstrip('0')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.027297" elapsed="0.000660"/>
+</kw>
+<kw name="Convert To Integer" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.028274" level="INFO">${hour} = 8</msg>
+<var>${hour}</var>
+<arg>${hour}</arg>
+<doc>Converts the given item to an integer number.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.028090" elapsed="0.000205"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.028903" level="INFO">${hour} = 9</msg>
+<var>${hour}</var>
+<arg>${hour}+${1}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.028420" elapsed="0.000501"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.029452" level="INFO">${minute} = 20</msg>
+<var>${minute}</var>
+<arg>${current_date_time.split()[4]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.029010" elapsed="0.000456"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.030322" level="INFO">${period} = PM</msg>
+<var>${period}</var>
+<arg>${current_date_time.split()[5]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.029544" elapsed="0.000805"/>
 </kw>
 <return>
-<value>${response_data}</value>
-<value>${response_code}</value>
-<status status="PASS" start="2024-11-16T13:34:29.998227" elapsed="0.000033"/>
+<value>${day}</value>
+<value>${month}</value>
+<value>${year}</value>
+<value>${hour}</value>
+<value>${minute}</value>
+<value>${period}</value>
+<status status="PASS" start="2024-11-17T20:20:54.030417" elapsed="0.000063"/>
 </return>
-<msg time="2024-11-16T13:34:29.998394" level="INFO">${response_data} = {'data': {'id': 12, 'email': 'rachel.howell@reqres.in', 'first_name': 'Rachel', 'last_name': 'Howell', 'avatar': 'https://reqres.in/img/faces/12-image.jpg'}, 'support': {'url': 'https://contentcaddy.i...</msg>
-<msg time="2024-11-16T13:34:29.998424" level="INFO">${response_code} = 200</msg>
-<var>${response_data}</var>
-<var>${response_code}</var>
-<arg>value=${12}</arg>
-<status status="PASS" start="2024-11-16T13:34:29.848349" elapsed="0.150091"/>
+<msg time="2024-11-17T20:20:54.030924" level="INFO">${day} = 17</msg>
+<msg time="2024-11-17T20:20:54.030967" level="INFO">${month} = Nov</msg>
+<msg time="2024-11-17T20:20:54.031005" level="INFO">${year} = 2024</msg>
+<msg time="2024-11-17T20:20:54.031045" level="INFO">${hour} = 9</msg>
+<msg time="2024-11-17T20:20:54.031083" level="INFO">${minute} = 20</msg>
+<msg time="2024-11-17T20:20:54.031120" level="INFO">${period} = PM</msg>
+<var>${day}</var>
+<var>${month}</var>
+<var>${year}</var>
+<var>${hour}</var>
+<var>${minute}</var>
+<var>${period}</var>
+<status status="PASS" start="2024-11-17T20:20:54.024735" elapsed="0.006408"/>
+</kw>
+<if>
+<branch type="IF" condition="'${confirm}'=='${TRUE}' and '${date}'=='${NULL}' and '${time}'=='${NULL}'">
+<kw name="Wait And Click Element" owner="common">
+<arg>locator=${next_add_reminder_button_locator}</arg>
+<arg>timeout=${timeout}</arg>
+<status status="NOT RUN" start="2024-11-17T20:20:54.031715" elapsed="0.000037"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${added_full_time_reminder}</var>
+<arg>${month} ${day}, ${year} ${hour}:${minute} ${period}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-11-17T20:20:54.031962" elapsed="0.000027"/>
+</kw>
+<kw name="Verify Landing Mininal Reminder Page" owner="minimal">
+<arg>title=${title}</arg>
+<arg>added_full_time_reminder=${added_full_time_reminder}</arg>
+<arg>toggle_minial_reminder_on=${toggle_minial_reminder_on}</arg>
+<status status="NOT RUN" start="2024-11-17T20:20:54.032166" elapsed="0.000017"/>
+</kw>
+<status status="NOT RUN" start="2024-11-17T20:20:54.031259" elapsed="0.000954"/>
+</branch>
+<branch type="ELSE IF" condition="'${confirm}'=='${TRUE}' and '${date}'=='${NULL}' and '${time}'!='${NULL}'">
+<kw name="Add Time" owner="minimal">
+<kw name="Handle Calculate Date Time" owner="minimal">
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2024-11-17T20:20:54.033712" level="INFO">${current_date_time} = 17 Nov 2024 08 20 PM</msg>
+<var>${current_date_time}</var>
+<arg>result_format=%d %b %Y %I %M %p</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.033464" elapsed="0.000277"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.034475" level="INFO">${day} = 17</msg>
+<var>${day}</var>
+<arg>${current_date_time.split()[0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.033857" elapsed="0.000637"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.035137" level="INFO">${month} = Nov</msg>
+<var>${month}</var>
+<arg>${current_date_time.split()[1]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.034596" elapsed="0.000559"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.035786" level="INFO">${year} = 2024</msg>
+<var>${year}</var>
+<arg>${current_date_time.split()[2]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.035253" elapsed="0.000551"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.036406" level="INFO">${hour} = 8</msg>
+<var>${hour}</var>
+<arg>${current_date_time.split()[3].lstrip('0')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.035902" elapsed="0.000522"/>
+</kw>
+<kw name="Convert To Integer" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.036671" level="INFO">${hour} = 8</msg>
+<var>${hour}</var>
+<arg>${hour}</arg>
+<doc>Converts the given item to an integer number.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.036527" elapsed="0.000162"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.037282" level="INFO">${hour} = 9</msg>
+<var>${hour}</var>
+<arg>${hour}+${1}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.036791" elapsed="0.000510"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.037933" level="INFO">${minute} = 20</msg>
+<var>${minute}</var>
+<arg>${current_date_time.split()[4]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.037398" elapsed="0.000561"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.038872" level="INFO">${period} = PM</msg>
+<var>${period}</var>
+<arg>${current_date_time.split()[5]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.038073" elapsed="0.000830"/>
+</kw>
+<return>
+<value>${day}</value>
+<value>${month}</value>
+<value>${year}</value>
+<value>${hour}</value>
+<value>${minute}</value>
+<value>${period}</value>
+<status status="PASS" start="2024-11-17T20:20:54.038973" elapsed="0.000043"/>
+</return>
+<msg time="2024-11-17T20:20:54.039227" level="INFO">${day} = 17</msg>
+<msg time="2024-11-17T20:20:54.039254" level="INFO">${month} = Nov</msg>
+<msg time="2024-11-17T20:20:54.039277" level="INFO">${year} = 2024</msg>
+<msg time="2024-11-17T20:20:54.039302" level="INFO">${hour} = 9</msg>
+<msg time="2024-11-17T20:20:54.039328" level="INFO">${minute} = 20</msg>
+<msg time="2024-11-17T20:20:54.039349" level="INFO">${period} = PM</msg>
+<var>${day}</var>
+<var>${month}</var>
+<var>${year}</var>
+<var>${hour}</var>
+<var>${minute}</var>
+<var>${period}</var>
+<status status="PASS" start="2024-11-17T20:20:54.033190" elapsed="0.006173"/>
+</kw>
+<if>
+<branch type="IF" condition="'${past}'=='${FALSE}'">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${select_hour}</var>
+<arg>${time.split(':')[0].lstrip('0')}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-11-17T20:20:54.039879" elapsed="0.000026"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${select_minute}</var>
+<arg>${time.split(':')[1]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-11-17T20:20:54.039988" elapsed="0.000011"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>${select_period}</var>
+<arg>${time.split(':')[2]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2024-11-17T20:20:54.040076" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2024-11-17T20:20:54.039472" elapsed="0.000637"/>
+</branch>
+<branch type="ELSE">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.040361" level="INFO">${current_minute} = 20</msg>
+<var>${current_minute}</var>
+<arg>${minute}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.040203" elapsed="0.000173"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.040637" level="INFO">${rounded_minute} = 20</msg>
+<var>${rounded_minute}</var>
+<arg>(int(${current_minute}) + 4) // 5 * 5</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.040464" elapsed="0.000187"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.040908" level="INFO">${rounded_minute_str} = 20</msg>
+<var>${rounded_minute_str}</var>
+<arg>f"{int(${rounded_minute}):02}"</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.040727" elapsed="0.000195"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2024-11-16T13:34:29.998704" level="INFO">{'data': {'id': 12, 'email': 'rachel.howell@reqres.in', 'first_name': 'Rachel', 'last_name': 'Howell', 'avatar': 'https://reqres.in/img/faces/12-image.jpg'}, 'support': {'url': 'https://contentcaddy.io?utm_source=reqres&amp;utm_medium=json&amp;utm_campaign=referral', 'text': 'Tired of writing endless social media content? Let Content Caddy generate it for you.'}}</msg>
-<arg>${response_data}</arg>
+<msg time="2024-11-17T20:20:54.041076" level="INFO">Rounded Minute: 20</msg>
+<arg>Rounded Minute: ${rounded_minute_str}</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2024-11-16T13:34:29.998585" elapsed="0.000156"/>
+<status status="PASS" start="2024-11-17T20:20:54.040996" elapsed="0.000104"/>
 </kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.041329" level="INFO">${select_hour} = 9</msg>
+<var>${select_hour}</var>
+<arg>${hour}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.041247" elapsed="0.000095"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.041496" level="INFO">${select_minute} = 20</msg>
+<var>${select_minute}</var>
+<arg>${rounded_minute_str}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.041414" elapsed="0.000095"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.041727" level="INFO">${select_period} = PM</msg>
+<var>${select_period}</var>
+<arg>${period}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.041580" elapsed="0.000167"/>
+</kw>
+<status status="PASS" start="2024-11-17T20:20:54.040132" elapsed="0.001644"/>
+</branch>
+<status status="PASS" start="2024-11-17T20:20:54.039443" elapsed="0.002348"/>
+</if>
+<kw name="Wait And Click Element" owner="common">
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:54.798049" level="INFO">xpath criteria: //android.widget.EditText[@resource-id="com.avjindersinghsekhon.minimaltodo:id/newTodoTimeEditText"]</msg>
+<arg>${locator}</arg>
+<arg>${timeout}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.042081" elapsed="0.756102"/>
+</kw>
+<kw name="Click Element" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:54.801343" level="INFO">Clicking element 'xpath=//android.widget.EditText[@resource-id="com.avjindersinghsekhon.minimaltodo:id/newTodoTimeEditText"]'.</msg>
+<msg time="2024-11-17T20:20:54.875402" level="INFO">xpath criteria: //android.widget.EditText[@resource-id="com.avjindersinghsekhon.minimaltodo:id/newTodoTimeEditText"]</msg>
+<arg>${locator}</arg>
+<doc>Click element identified by `locator`.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.798504" elapsed="0.076998"/>
+</kw>
+<arg>locator=${minimal_reminder_time_button_locator}</arg>
+<arg>timeout=${timeout}</arg>
+<status status="PASS" start="2024-11-17T20:20:54.041889" elapsed="0.833810"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.878717" level="INFO">@{am_button} = [ 395 | 1642 ]</msg>
+<var>@{am_button}</var>
+<arg>${395}</arg>
+<arg>${1642}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.876080" elapsed="0.002673"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2024-11-17T20:20:54.880266" level="INFO">@{pm_button} = [ 902 | 1642 ]</msg>
+<var>@{pm_button}</var>
+<arg>${902}</arg>
+<arg>${1642}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2024-11-17T20:20:54.878923" elapsed="0.001367"/>
+</kw>
+<if>
+<branch type="IF" condition="'${select_period}'=='AM'">
+<kw name="Tap With Positions" owner="AppiumLibrary">
+<arg>${1000}</arg>
+<arg>${am_button}</arg>
+<doc>Taps on a particular place with up to five fingers, holding for a
+certain time</doc>
+<status status="NOT RUN" start="2024-11-17T20:20:54.880598" elapsed="0.000016"/>
+</kw>
+<status status="NOT RUN" start="2024-11-17T20:20:54.880371" elapsed="0.000270"/>
+</branch>
+<branch type="ELSE">
+<kw name="Tap With Positions" owner="AppiumLibrary">
+<arg>${1000}</arg>
+<arg>${pm_button}</arg>
+<doc>Taps on a particular place with up to five fingers, holding for a
+certain time</doc>
+<status status="PASS" start="2024-11-17T20:20:54.880731" elapsed="1.299612"/>
+</kw>
+<status status="PASS" start="2024-11-17T20:20:54.880663" elapsed="1.299751"/>
+</branch>
+<status status="PASS" start="2024-11-17T20:20:54.880351" elapsed="1.300093"/>
+</if>
+<kw name="Load Json From File" owner="JSONLibrary">
+<msg time="2024-11-17T20:20:56.181418" level="INFO">${date_time_data} = {'data': {'hours': {'12': [648, 975], '1': [775, 1014], '2': [877, 1101], '3': [892, 1228], '4': [863, 1350], '5': [775, 1443], '6': [652, 1482], '7': [521, 1438], '8': [424, 1360], '9': [395, 1245], ...</msg>
+<var>${date_time_data}</var>
+<arg>file_name=/Users/513007542/ttb_automation_test/keyword/mobile/minimal/../../../../ttb_automation_test/resource/mobile/test_data.json</arg>
+<doc>Load JSON from file.</doc>
+<status status="PASS" start="2024-11-17T20:20:56.180603" elapsed="0.000845"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:56.182845" level="INFO">${select_hour} = [395, 1245]</msg>
+<var>${select_hour}</var>
+<arg>${date_time_data["data"]["hours"]["${select_hour}"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:56.181582" elapsed="0.001298"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-11-17T20:20:56.184051" level="INFO">${select_minute} = [863, 1350]</msg>
+<var>${select_minute}</var>
+<arg>${date_time_data["data"]["minute"]["${select_minute}"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-11-17T20:20:56.183054" elapsed="0.001028"/>
+</kw>
+<kw name="Tap With Positions" owner="AppiumLibrary">
+<arg>${1000}</arg>
+<arg>${select_hour}</arg>
+<doc>Taps on a particular place with up to five fingers, holding for a
+certain time</doc>
+<status status="PASS" start="2024-11-17T20:20:56.184251" elapsed="1.297809"/>
+</kw>
+<kw name="Tap With Positions" owner="AppiumLibrary">
+<arg>${1000}</arg>
+<arg>${select_minute}</arg>
+<doc>Taps on a particular place with up to five fingers, holding for a
+certain time</doc>
+<status status="PASS" start="2024-11-17T20:20:57.482670" elapsed="1.307875"/>
+</kw>
+<kw name="Wait And Click Element" owner="common">
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:59.298881" level="INFO">xpath criteria: //android.widget.Button[@resource-id="com.avjindersinghsekhon.minimaltodo:id/ok"]</msg>
+<arg>${locator}</arg>
+<arg>${timeout}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2024-11-17T20:20:58.792046" elapsed="0.506943"/>
+</kw>
+<kw name="Click Element" owner="AppiumLibrary">
+<msg time="2024-11-17T20:20:59.302830" level="INFO">Clicking element 'xpath=//android.widget.Button[@resource-id="com.avjindersinghsekhon.minimaltodo:id/ok"]'.</msg>
+<msg time="2024-11-17T20:20:59.358751" level="INFO">xpath criteria: //android.widget.Button[@resource-id="com.avjindersinghsekhon.minimaltodo:id/ok"]</msg>
+<arg>${locator}</arg>
+<doc>Click element identified by `locator`.</doc>
+<status status="PASS" start="2024-11-17T20:20:59.299392" elapsed="0.059515"/>
+</kw>
+<arg>locator=${time_ok}</arg>
+<arg>timeout=${timeout}</arg>
+<status status="PASS" start="2024-11-17T20:20:58.790882" elapsed="0.568188"/>
+</kw>
+<arg>date=${date}</arg>
+<arg>time=${time}</arg>
+<status status="PASS" start="2024-11-17T20:20:54.032680" elapsed="5.326450"/>
+</kw>
+<status status="PASS" start="2024-11-17T20:20:54.032241" elapsed="5.326914"/>
+</branch>
+<branch type="ELSE IF" condition="'${confirm}'=='${TRUE}' and '${date}'!='${NULL}' and '${time}'=='${NULL}'">
 <kw name="Log" owner="BuiltIn">
-<msg time="2024-11-16T13:34:29.998939" level="INFO">200</msg>
-<arg>${response_code}</arg>
+<arg>message</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2024-11-16T13:34:29.998852" elapsed="0.000117"/>
+<status status="NOT RUN" start="2024-11-17T20:20:59.359390" elapsed="0.000018"/>
 </kw>
-<doc>To verify get user profile api will return correct data when trying to get profile of existing user</doc>
-<status status="PASS" start="2024-11-16T13:34:29.848009" elapsed="0.151068"/>
+<status status="NOT RUN" start="2024-11-17T20:20:59.359204" elapsed="0.000227"/>
+</branch>
+<branch type="ELSE IF" condition="'${confirm}'!='${TRUE}'">
+<kw name="Add Time" owner="minimal">
+<arg>date=${date}</arg>
+<arg>time=${time}</arg>
+<status status="NOT RUN" start="2024-11-17T20:20:59.359739" elapsed="0.000048"/>
+</kw>
+<kw name="Wait And Click Element" owner="common">
+<arg>locator=${close_add_reminder_page_locator}</arg>
+<arg>timeout=${timeout}</arg>
+<status status="NOT RUN" start="2024-11-17T20:20:59.360056" elapsed="0.000025"/>
+</kw>
+<status status="NOT RUN" start="2024-11-17T20:20:59.359448" elapsed="0.000664"/>
+</branch>
+<status status="PASS" start="2024-11-17T20:20:54.031232" elapsed="5.329736"/>
+</if>
+<arg>title=1ๅนสน</arg>
+<arg>date=${NULL}</arg>
+<arg>time=11:45:AM</arg>
+<arg>toggle_minial_reminder_on=${TRUE}</arg>
+<arg>confirm=${TRUE}</arg>
+<status status="PASS" start="2024-11-17T20:20:52.038217" elapsed="7.322825"/>
+</kw>
+<tag>case_1</tag>
+<status status="PASS" start="2024-11-17T20:20:44.282616" elapsed="15.078681"/>
 </test>
-<test id="s1-t2" name="Get user profile but user not found" line="11">
-<kw name="Send Get Request For Users" owner="get_user">
-<kw name="Send Get Request" owner="common">
-<kw name="Create Session" owner="RequestsLibrary">
-<msg time="2024-11-16T13:34:30.000571" level="INFO">Creating Session using : alias=get_data, url=https://reqres.in/api, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<arg>alias=get_data</arg>
-<arg>url=${url}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<status status="PASS" start="2024-11-16T13:34:30.000456" elapsed="0.000221"/>
-</kw>
-<kw name="Set Variable If" owner="BuiltIn">
-<msg time="2024-11-16T13:34:30.001013" level="INFO">${endpoint} = users/1234</msg>
-<var>${endpoint}</var>
-<arg>'${params}'=='${NULL}'</arg>
-<arg>${endpoint}/${value}</arg>
-<arg>${endpoint}</arg>
-<doc>Sets variable based on the given condition.</doc>
-<status status="PASS" start="2024-11-16T13:34:30.000838" elapsed="0.000192"/>
-</kw>
-<kw name="GET On Session" owner="RequestsLibrary">
-<msg time="2024-11-16T13:34:30.129574" level="INFO">GET Request : url=https://reqres.in/api/users/1234 
- path_url=/api/users/1234 
- headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
- body=None 
- </msg>
-<msg time="2024-11-16T13:34:30.129638" level="INFO">GET Response : url=https://reqres.in/api/users/1234 
- status=404, reason=Not Found 
- headers={'Date': 'Sat, 16 Nov 2024 06:34:30 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '2', 'Connection': 'keep-alive', 'Report-To': '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1731738796&amp;sid=c4c9725f-1ab0-44d8-820f-430df2718e11&amp;s=f4yDK8Kc6YmPSJnqY%2F5UDszjpF0X04pKnc5ccl079rA%3D"}]}', 'Reporting-Endpoints': 'heroku-nel=https://nel.heroku.com/reports?ts=1731738796&amp;sid=c4c9725f-1ab0-44d8-820f-430df2718e11&amp;s=f4yDK8Kc6YmPSJnqY%2F5UDszjpF0X04pKnc5ccl079rA%3D', 'Nel': '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Etag': 'W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"', 'Via': '1.1 vegur', 'Cache-Control': 'max-age=14400', 'CF-Cache-Status': 'HIT', 'Age': '74', 'Vary': 'Accept-Encoding', 'Server': 'cloudflare', 'CF-RAY': '8e3574a24b71a053-SIN', 'server-timing': 'cfL4;desc="?proto=TCP&amp;rtt=30338&amp;sent=4&amp;recv=6&amp;lost=0&amp;retrans=0&amp;sent_bytes=2837&amp;recv_bytes=773&amp;delivery_rate=90773&amp;cwnd=251&amp;unsent_bytes=0&amp;cid=1a0b8bec3571a7e6&amp;ts=48&amp;x=0"'} 
- body={} 
- </msg>
-<msg time="2024-11-16T13:34:30.129683" level="INFO">/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/urllib3/connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'reqres.in'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(</msg>
-<msg time="2024-11-16T13:34:30.129757" level="INFO">${resp_google} = &lt;Response [404]&gt;</msg>
-<var>${resp_google}</var>
-<arg>alias=get_data</arg>
-<arg>url=${endpoint}</arg>
-<arg>params=${params}</arg>
-<arg>headers=${headers}</arg>
-<arg>expected_status=anything</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2024-11-16T13:34:30.001111" elapsed="0.128659"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2024-11-16T13:34:30.130179" level="INFO">${response_data} = {}</msg>
-<var>${response_data}</var>
-<arg>${resp_google.json()}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2024-11-16T13:34:30.129881" elapsed="0.000312"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2024-11-16T13:34:30.130476" level="INFO">${response_code} = 404</msg>
-<var>${response_code}</var>
-<arg>${resp_google.status_code}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2024-11-16T13:34:30.130258" elapsed="0.000231"/>
-</kw>
-<return>
-<value>${response_data}</value>
-<value>${response_code}</value>
-<status status="PASS" start="2024-11-16T13:34:30.130521" elapsed="0.000027"/>
-</return>
-<msg time="2024-11-16T13:34:30.130634" level="INFO">${response_data} = {}</msg>
-<msg time="2024-11-16T13:34:30.130653" level="INFO">${response_code} = 404</msg>
-<var>${response_data}</var>
-<var>${response_code}</var>
-<arg>url=${reqres_url}</arg>
-<arg>endpoint=${users_endpoint}</arg>
-<arg>value=${value}</arg>
-<status status="PASS" start="2024-11-16T13:34:30.000118" elapsed="0.130545"/>
-</kw>
-<return>
-<value>${response_data}</value>
-<value>${response_code}</value>
-<status status="PASS" start="2024-11-16T13:34:30.130696" elapsed="0.000015"/>
-</return>
-<msg time="2024-11-16T13:34:30.130780" level="INFO">${response_data} = {}</msg>
-<msg time="2024-11-16T13:34:30.130798" level="INFO">${response_code} = 404</msg>
-<var>${response_data}</var>
-<var>${response_code}</var>
-<arg>value=${1234}</arg>
-<status status="PASS" start="2024-11-16T13:34:29.999681" elapsed="0.131127"/>
-</kw>
-<kw name="Log" owner="BuiltIn">
-<msg time="2024-11-16T13:34:30.130955" level="INFO">{}</msg>
-<arg>${response_data}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2024-11-16T13:34:30.130892" elapsed="0.000084"/>
-</kw>
-<kw name="Log" owner="BuiltIn">
-<msg time="2024-11-16T13:34:30.131106" level="INFO">404</msg>
-<arg>${response_code}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2024-11-16T13:34:30.131047" elapsed="0.000077"/>
-</kw>
-<doc>To verify get user profile api will return 404 not found when trying to get exist profile of not existing user</doc>
-<status status="PASS" start="2024-11-16T13:34:29.999268" elapsed="0.131926"/>
-</test>
-<status status="PASS" start="2024-11-16T13:34:29.746772" elapsed="0.384645"/>
+<status status="PASS" start="2024-11-17T20:20:44.139102" elapsed="15.222909"/>
 </suite>
 <statistics>
 <total>
-<stat pass="2" fail="0" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
+<stat pass="1" fail="0" skip="0">case_1</stat>
 </tag>
 <suite>
-<stat pass="2" fail="0" skip="0" id="s1" name="Get User">Get User</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="Minimal">Minimal</stat>
 </suite>
 </statistics>
 <errors>
