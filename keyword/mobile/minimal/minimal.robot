@@ -5,17 +5,12 @@ Resource    ${CURDIR}/../../../../ttb_automation_test/resource/mobile/locator/mi
 Resource    ${CURDIR}/../../../../ttb_automation_test/resource/mobile/locator/minimal/minimal_reminder_add_page.robot
 Resource    ${CURDIR}/../../../../ttb_automation_test/resource/mobile/locator/minimal/minimal_remider_togle_on.robot
 Resource    ${CURDIR}/../../../../ttb_automation_test/resource/mobile/locator/minimal/minimal_reminder_select_time_page.robot
-
+Resource    ${CURDIR}/../../../../ttb_automation_test/resource/mobile/locator/minimal/minimal_reminder_select_date.robot
 Library    AppiumLibrary
-*** Variables ***
-${start_x}    ${259}
-${start_y}    ${1100}    # Bottom of the bounds
-${end_x}    ${1021}
-${end_y}    ${1800}
 
 *** Keywords ***
 Find Reminder Item
-    [Arguments]    ${added_full_time_reminder}=${NULL}    ${title}=${NULL}
+    [Arguments]    ${title}=${NULL}
     Wait Until Element Is Visible    locator=${added_reminder_lists_locator}    timeout=${timeout}
     ${added_reminder_list}    Get WebElements    locator=${added_reminder_lists_locator}
     ${added_reminder_list}    Get Length    ${added_reminder_list}
@@ -23,14 +18,19 @@ Find Reminder Item
             ${added_reminder_name_locator}    Set Variable    xpath=//android.view.ViewGroup[@resource-id="com.avjindersinghsekhon.minimaltodo:id/myCoordinatorLayout"]/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[${counter}]/android.widget.RelativeLayout/android.widget.TextView[1]  
             ${added_reminder_date_time_locator}    Set Variable    xpath=//android.view.ViewGroup[@resource-id="com.avjindersinghsekhon.minimaltodo:id/myCoordinatorLayout"]/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[${counter}]/android.widget.RelativeLayout/android.widget.TextView[2]  
             ${assert_title}    Run Keyword And Return Status    Get Element By Attribute And Should Be Equal As Strings    locator=${added_reminder_name_locator}    attribute=text    expected=${title}    timeout=${timeout}
-            IF    '${added_full_time_reminder}'=='${TRUE}'
-                ${assert_date_time}    Run Keyword And Return Status    Get Element By Attribute And Should Be Equal As Strings    locator=${added_reminder_date_time_locator}    attribute=text    expected=${added_full_time_reminder}    timeout=${timeout}
-                Exit For Loop If    '${assert_date_time}' =='${TRUE}'
-            ELSE
-                ${assert_date_time}    Run Keyword And Return Status    Page Should Not Contain Element    locator=${added_reminder_date_time_locator}
-                Exit For Loop If    '${assert_date_time}' =='${TRUE}'
-            END 
-        END
+            ${assert_date_time}    Run Keyword And Return Status    Wait Until Element Is Visible    locator=${added_reminder_date_time_locator}    timeout=${timeout}
+
+            Exit For Loop If    '${assert_title}' =='${TRUE}'
+    END
+    ${added_reminder_date_time_locator}    Set Variable If    '${assert_date_time}' =='${TRUE}'    ${added_reminder_date_time_locator}    ${NULL}
+    Run Keyword If    '${assert_title}' =='${FALSE}'    Fail
+    RETURN    ${title}    ${added_reminder_name_locator}    ${added_reminder_date_time_locator}
+
+Delete Reminder Item
+    [Arguments]    ${title}=${NULL}
+        ${title}    ${locator}    ${date_time}    Find Reminder Item    title=${title}
+        ${x1}    ${y1}    ${x2}    ${y2}    Get Bounds    locator=${locator}
+        Swipe    start_x=${x1}    start_y=${y1}    offset_x=${x2}    offset_y=${y2}
 
 Verify Landing Mininal Reminder Page
     [Arguments]    ${there_is_reminder}=${TRUE}    ${title}=${NULL}    ${added_full_time_reminder}=${NULL}    ${toggle_minial_reminder_on}=${TRUE}
@@ -39,10 +39,14 @@ Verify Landing Mininal Reminder Page
         ${is_string}      Evaluate    $title[0].isalpha()
         ${title}    Run Keyword If    '${is_string}'=='${TRUE}'    Convert To Title Case    ${title}    ELSE    Set Variable    ${title}
 
-        Find Reminder Item    added_full_time_reminder=${added_full_time_reminder}    title=${title}
-        
+        ${title_actual}    ${added_reminder_name_locator}    ${added_reminder_date_time_locator}    Find Reminder Item    title=${title}
+        Get Element By Attribute And Should Be Equal As Strings    locator=${added_reminder_name_locator}    timeout=${timeout}    attribute=text    expected=${title}    strp=${TRUE}
+        IF    '${added_full_time_reminder}'=='${NULL}'
+            Should Be Equal As Strings    ${added_reminder_date_time_locator}    ${NULL}
+        ELSE
+            Get Element By Attribute And Should Be Equal As Strings    locator=${added_reminder_date_time_locator}    timeout=${timeout}    attribute=text    expected=${added_full_time_reminder}    ignore_case=${TRUE}
+        END
     ELSE
-        ${test}    Get Text    locator=${login_page_title_locator}
         Wait Until Element Is Visible    locator=${application_locator}    timeout=${timeout}
         Wait Until Element Is Visible    locator=${setting_button_locator}    timeout=${timeout}
         Wait Until Element Is Visible    locator=${add_reminder_button_locator}    timeout=${timeout}
@@ -66,8 +70,8 @@ Verify Add Mininal Reminder Page
     END
     
 Add Mininal Reminder
-    [Arguments]    ${title}=${NULL}    ${date}=${NULL}    ${time}=${NULL}    ${confirm}=${TRUE}    ${toggle_minial_reminder_on}=${TRUE}
-    Log    ${toggle_minial_reminder_on}
+    [Arguments]    ${title}=${NULL}    ${next_date}=${NULL}    ${last_date}=${NULL}    ${confirm}=${TRUE}    ${toggle_minial_reminder_on}=${TRUE}    ${select_time}=${FALSE}
+    
     Wait And Click Element    locator=${add_reminder_button_locator}    timeout=${timeout}
     Wait And Input Text    locator=${input_reminder_title_locator}   text=${title}    timeout=${timeout}
     
@@ -75,58 +79,67 @@ Add Mininal Reminder
         Wait And Click Element    locator=${add_reminder_toggle_locator}    timeout=${timeout}
     END        
     
-    ${day}    ${month}    ${year}    ${hour}    ${minute}    ${period}    Handle Calculate Date Time
+    ${day_d}    ${month}    ${year}    ${hour_d}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}    Handle Calculate Date Time    next_date=${next_date}    last_date=${last_date}
     
-    IF    '${confirm}'=='${TRUE}' and '${date}'=='${NULL}' and '${time}'=='${NULL}'
+    IF    '${next_date}'!='${NULL}' and '${last_date}'=='${NULL}'
+        ${day}    Set Variable    ${next_date.split()[0]} 
+        ${hour}  Set Variable    ${next_date.split()[2]}
+        ${minute}    Set Variable    ${next_date.split()[4]}
+
+        ${time}    Set Variable If    '${minute}'=='0' and '${hour}'=='0'   ${NULL}    ${hour_d}:${calculated_minute}:${period}
+        ${date}    Set Variable If    '${day}'=='0'   ${NULL}    ${day_d} ${month} ${year}
+
+    ELSE IF    '${last_date}'!='${NULL}' and '${next_date}'=='${NULL}'
+        ${day}    Set Variable    ${last_date.split()[0]} 
+        ${hour}  Set Variable    ${last_date.split()[2]}
+        ${minute}    Set Variable    ${last_date.split()[4]}
+
+        ${time}    Set Variable If    '${minute}'=='0' and '${hour}'=='0'    ${NULL}    ${hour_d}:${calculated_minute}:${period}
+        ${date}    Set Variable If    '${day}'=='0'   ${NULL}    ${day_d} ${month} ${year}
+    
+    ELSE IF    '${last_date}'=='${NULL}' and '${next_date}'=='${NULL}'
+        ${time}    Set Variable    ${NULL}
+        ${date}    Set Variable    ${NULL}
+    END
+        
+
+    IF    '${confirm}'=='${TRUE}' and '${date}'=='${NULL}' and '${time}'=='${NULL}' and '${select_time}'=='${FALSE}'
         Wait And Click Element    locator=${next_add_reminder_button_locator}    timeout=${timeout}
 
-        ${added_full_time_reminder}    Set Variable    ${month} ${day}, ${year} ${hour}:${minute} ${period}
-        Verify Landing Mininal Reminder Page    title=${title}    added_full_time_reminder=${added_full_time_reminder}    toggle_minial_reminder_on=${toggle_minial_reminder_on}
-
+    ELSE IF    '${confirm}'=='${TRUE}' and '${date}'=='${NULL}' and '${time}'=='${NULL}' and '${select_time}'=='${TRUE}'
+        Wait And Click Element    locator=${minimal_reminder_time_button_locator}    timeout=${timeout}
+        Wait And Click Element    locator=${time_ok}    timeout=${timeout}
+        Wait And Click Element    locator=${next_add_reminder_button_locator}    timeout=${timeout}
     ELSE IF    '${confirm}'=='${TRUE}' and '${date}'=='${NULL}' and '${time}'!='${NULL}'
-        Add Time    date=${date}    time=${time}
+        Add Time    time=${time}
+        Wait And Click Element    locator=${next_add_reminder_button_locator}    timeout=${timeout}
     ELSE IF    '${confirm}'=='${TRUE}' and '${date}'!='${NULL}' and '${time}'=='${NULL}'
-        Log    message
+        Add Date    date=${date}
+        Wait And Click Element    locator=${next_add_reminder_button_locator}    timeout=${timeout}
+    ELSE IF    '${confirm}'=='${TRUE}' and '${date}'!='${NULL}' and '${time}'!='${NULL}'
+        Add Date    date=${date}
+        Add Time    time=${time}
+        Wait And Click Element    locator=${next_add_reminder_button_locator}    timeout=${timeout}
     ELSE IF    '${confirm}'!='${TRUE}'
-        Add Time    date=${date}    time=${time}
         Wait And Click Element    locator=${close_add_reminder_page_locator}    timeout=${timeout}
     END
-
-Verify Reminder Toggle On
-    [Arguments]    ${date}=${NULL}    ${time}=${time}
-
-    IF    '${date}'!='${NULL}'
-        Wait Until Element Is Visible    locator=${minimal_reminder_date_button_locator}    timeout=${timeout}
-    ELSE IF    '${date}'!='${NULL}'
-        Wait Until Element Is Visible    locator=${minimal_reminder_date_button_locator}    timeout=${timeout}
-    END
-
-Verify Time Date
-    
-    Wait Until Element Is Visible    locator=${minimal_reminder_date_button_locator}    timeout=${timeout}
-    Wait Until Element Is Visible    locator=${minimal_reminder_at_sigh_locator}    timeout=${timeout}
-    Wait Until Element Is Visible    locator=${minimal_reminder_time_button_locator}    timeout=${timeout}
-    Wait Until Element Is Visible    locator=${minimal_reminder_date_time_description_locator}    timeout=${timeout}
-    
-    ${day}    ${month}    ${year}    ${hour}    ${minute}    ${period}    Handle Calculate Date Time
-    ${minimal_remider_schesdule_decription}    Set Variable    Reminder set for ${day} ${month}, ${year}, ${hour}:00 ${period}
-    Get Element By Attribute And Should Be Equal As Strings    locator=${minimal_reminder_date_time_description_locator}    attribute=text    expected=${minimal_remider_schesdule_decription}
-    
-
+    RETURN    ${day_d}    ${month}    ${year}    ${hour_d}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period} 
 
 Add Time
-    [Arguments]    ${date}=${NULL}    ${time}=${NULL}    ${past}=${TRUE}
+    [Arguments]    ${time}=${NULL}    ${time_default}=${TRUE}
 
-    ${day}    ${month}    ${year}    ${hour}    ${minute}    ${period}    Handle Calculate Date Time
+    ${day}    ${month}    ${year}    ${hour}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}    Handle Calculate Date Time
 
-    IF    '${past}'=='${FALSE}'
+    IF    '${time_default}'!='${FALSE}'
         ${select_hour}    Set Variable    ${time.split(':')[0].lstrip('0')}
         ${select_minute}    Set Variable    ${time.split(':')[1]}
         ${select_period}    Set Variable    ${time.split(':')[2]}
     ELSE
-         ${current_minute}    Set Variable    ${minute}
-        ${rounded_minute}    Evaluate    (int(${current_minute}) + 4) // 5 * 5  # Round up to nearest 5
-        ${rounded_minute_str}    Evaluate    f"{int(${rounded_minute}):02}"  # Format as two digits
+        ${current_minute}    Set Variable    ${minute}
+        ${current_minute}    Convert To Integer    ${minute}
+        ${rounded_minute}    Evaluate    (int(${current_minute}) + 4) // 5 * 5
+        ${rounded_minute}    Set Variable If    '${rounded_minute}'=='60'    00    ${rounded_minute}
+        ${rounded_minute_str}    Evaluate    f"{int(${rounded_minute}):02}"
     
         ${select_hour}    Set Variable    ${hour}
         ${select_minute}    Set Variable    ${rounded_minute_str}
@@ -152,57 +165,142 @@ Add Time
     Tap with Positions    ${1000}    ${select_minute}
     Wait And Click Element    locator=${time_ok}    timeout=${timeout}
 
+Add Date
+    [Arguments]    ${date}=${NULL}
+    ${current_date}    Get Current Date    result_format=%d %B %Y
+    ${date}    Convert Date    ${date}    date_format=%d %b %Y    result_format=%d %B %Y
+    ${date}    Set Variable If    '${date}'=='${NULL}'    ${current_date}    ${date}
+    Wait And Click Element    locator=${minimal_reminder_date_button_locator}    timeout=${timeout}
+
+    ${x1}    ${y1}    ${x2}    ${y2}    Get Bounds    locator=${calendat}
+    ${x1}    Convert To Integer    ${x1}
+    ${y1}    Convert To Integer    ${y1}
+    ${x2}    Convert To Integer    ${x2}
+    ${y2}    Convert To Integer    ${y2}
     
+    ${find_date}    Set Variable    ${FALSE}
+    ${date_compare}    Convert Date    ${date}    date_format=%d %B %Y  
+    ${current_date_compare}    Convert Date    ${current_date}    date_format=%d %B %Y
+    ${date_compare}    Convert Date    ${date_compare}    result_format=epoch
+    ${current_date_compare}    Convert Date    ${current_date_compare}    result_format=epoch
    
-
-    # IF    '${time}'!='${NULL}'
-    #     Log    message
-    # ELSE IF    '${date}'=='${NULL}' and '${time}'=='${NULL}'
-    #     Wait Until Element Is Visible    locator=${minimal_reminder_date_button_locator}    timeout=${timeout}
-    #     Wait Until Element Is Visible    locator=${minimal_reminder_at_sigh_locator}    timeout=${timeout}
-    #     Wait Until Element Is Visible    locator=${minimal_reminder_time_button_locator}    timeout=${timeout}
-    #     Wait Until Element Is Visible    locator=${minimal_reminder_date_time_description_locator}    timeout=${timeout}
-        
-    #     ${day}    ${month}    ${year}    ${hour}    ${minute}    ${period}    Handle Calculate Date Time
-    #     ${minimal_remider_schesdule_decription}    Set Variable    Reminder set for ${day} ${month}, ${year}, ${hour}:00 ${period}
-    #     Get Element By Attribute And Should Be Equal As Strings    locator=${minimal_reminder_date_time_description_locator}    attribute=text    expected=${minimal_remider_schesdule_decription}
-    # END
-
-    # Wait And Click Element    locator=xpath=//android.widget.EditText[@resource-id="com.avjindersinghsekhon.minimaltodo:id/newTodoTimeEditText"]    
-    # @{firstFinger}    create list    ${400}    ${1238}
-    # Tap with Positions    ${1000}    ${firstFinger}
-
-    # @{firstFinger2}    create list    ${868}    ${1355}
-    # Tap with Positions    ${1000}    ${firstFinger2}
-
-
-    # Wait And Click Element    locator=${minimal_reminder_date_button_locator}
-    # ${minimal_reminder_date_locator}    Set Variable    xpath=//android.view.View[@content-desc="18 November 2024"]
-    # Wait And Click Element    locator=${minimal_reminder_date_locator}
-    
-
-    
-    # ${actual}    Get Element Attribute    locator=xpath=//android.widget.ListView    attribute=bounds
-    # Swipe    start_x=${start_x}    start_y=${start_y}    offset_x=${end_x}    offset_y=${end_y}
-    # Swipe    start_x=${start_x}    start_y=${start_y}    offset_x=${end_x}    offset_y=${end_y}
-    # Swipe    start_x=${start_x}    start_y=${start_y}    offset_x=${end_x}    offset_y=${end_y}
-
-
-    # Wait And Click Element    locator=xpath=//android.view.View[@content-desc="01 August 2024"]
-   
-    # ${actual}    Get Element Attribute    locator=xpath=//android.view.View[@content-desc="01 August 2024 selected"]    attribute=content-desc
-    
+    WHILE    '${find_date}'=='${FALSE}'
+        IF    $current_date_compare == $date_compare
+                ${find_date}    Run Keyword And Return Status    Wait Until Element Is Visible    locator=xpath=//android.view.View[@content-desc="${date} selected"]   timeout=${timeout}
+            ELSE IF    $current_date_compare > $date_compare
+                ${find_date}    Run Keyword And Return Status    Wait Until Element Is Visible    locator=xpath=//android.view.View[@content-desc="${date}"]   timeout=${timeout}
+                Run Keyword If    '${find_date}'=='${FALSE}'    Swipe    start_x=${x1}    start_y=${y1}    offset_x=${x2}    offset_y=${y2}
+                Run Keyword If    '${find_date}'=='${TRUE}'    Wait And Click Element    locator=xpath=//android.view.View[@content-desc="${date}"]   timeout=${timeout}
+            ELSE IF    $current_date_compare < $date_compare
+                ${y2_cal}    Evaluate    (${50}/${y2})*100
+                ${y2}    Evaluate   ${y2} - ${y2}*(${y2_cal}/100)
+                ${find_date}    Run Keyword And Return Status    Wait Until Element Is Visible    locator=xpath=//android.view.View[@content-desc="${date}"]   timeout=${timeout}
+                Run Keyword If    '${find_date}'=='${FALSE}'    Swipe    start_x=${x1}    start_y=${y2}    offset_x=${x2}    offset_y=${y1}
+                Run Keyword If    '${find_date}'=='${TRUE}'    Wait And Click Element    locator=xpath=//android.view.View[@content-desc="${date}"]   timeout=${timeout}
+            END
+            Exit For Loop If    '${find_date}'=='${TRUE}'
+    END
+    Wait And Click Element    locator=${time_ok}   timeout=${timeout}
 
 Handle Calculate Date Time
-    ${current_date_time}    Get Current Date    result_format=%d %b %Y %I %M %p
-    ${day}    Set Variable    ${current_date_time.split()[0]} 
-    ${month}  Set Variable    ${current_date_time.split()[1]}
-    ${year}   Set Variable    ${current_date_time.split()[2]}
-    ${hour}    Set Variable    ${current_date_time.split()[3].lstrip('0')}
-    ${hour}    Convert To Integer    ${hour}
-    ${hour}    Evaluate    ${hour}+${1}
-    ${minute}    Set Variable    ${current_date_time.split()[4]}
-    ${period}    Set Variable    ${current_date_time.split()[5]}
+    [Arguments]    ${next_date}=${NULL}    ${last_date}=${NULL}
+    ${date_time}    Get Current Date    result_format=%d %b %Y %I %M %p
+    IF    '${next_date}'!='${NULL}'
+        ${future_date_time}    Get Current Date    result_format=%Y-%m-%d %H:%M:%S.%f
+        ${date_time}    Add Time To Date    date=${future_date_time}    time=${next_date}    result_format=%d %b %Y %I %M %p
+    ELSE IF    '${last_date}'!='${NULL}'
+        ${last_date_time}    Get Current Date    result_format=%Y-%m-%d %H:%M:%S.%f
+        ${date_time}    Subtract Time From Date    date=${last_date_time}    time=${last_date}   result_format=%d %b %Y %I %M %p
+    END
     
-    RETURN    ${day}    ${month}    ${year}    ${hour}    ${minute}    ${period}
+    ${day}    Set Variable    ${date_time.split()[0]} 
+    ${month}  Set Variable    ${date_time.split()[1]}
+    ${year}   Set Variable    ${date_time.split()[2]}
+    ${hour}    Set Variable    ${date_time.split()[3].lstrip('0')}
+    ${calculated_hour}    Set Variable    ${date_time.split()[3].lstrip('0')}
+    ${calculated_hour}    Convert To Integer    ${calculated_hour}
+    ${calculated_hour}    Set Variable If   '${calculated_hour}' =='12'    ${0}    ${calculated_hour}
+    ${calculated_hour}    Evaluate    ${calculated_hour}+${1}
+    ${minute}    Set Variable    ${date_time.split()[4]}
+    ${period}    Set Variable    ${date_time.split()[5]}
+
+
+    ${current_minute}    Set Variable    ${minute}
+    ${current_minute}    Convert To Integer    ${minute}
+    ${rounded_minute}    Evaluate    (int(${current_minute}) + 4) // 5 * 5
+    ${rounded_minute}    Set Variable If    '${rounded_minute}'=='60'    00    ${rounded_minute}
+    ${rounded_minute_str}    Evaluate    f"{int(${rounded_minute}):02}"
+
+    ${select_hour}    Set Variable    ${hour}
+    ${select_minute}    Set Variable    ${rounded_minute_str}
+    ${select_period}    Set Variable    ${period}
+    ${calculated_minute}    Set Variable    ${select_minute}
+
+    IF    '${calculated_minute}'=='00'
+        ${calculated_minute}    Convert To Integer    ${calculated_minute}
+        ${calculated_minute}    Evaluate    ${calculated_minute}+${5}     
+        ${calculated_minute}    Evaluate    f"{int(${calculated_minute}):02}"   
+    END
+    
+    RETURN    ${day}    ${month}    ${year}    ${hour}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}
+
+Update Minimal Reminder Item
+    [Arguments]    ${from_title}=${NULL}    ${new_title}=${NULL}    ${next_date}=${NULL}    ${last_date}=${NULL}    ${toggle_minial_reminder_on}=${TRUE}
+
+    ${title}    ${added_reminder_name_locator}    ${added_reminder_date_time_locator}    Find Reminder Item    title=${from_title}
+    ${date_time}    Get Element Attribute    locator=${added_reminder_name_locator}    attribute=text
+    Wait And Click Element    locator=${added_reminder_name_locator}    timeout=${timeout}
+    
+    Wait Until Element Is Visible    locator=${input_reminder_title_locator}    timeout=${timeout}
+
+
+    ${check_toggle}    Get Element Attribute    ${add_reminder_toggle_locator}    attribute=checked
+    ${day_d}    ${month}    ${year}    ${hour_d}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}    Handle Calculate Date Time    next_date=${next_date}    last_date=${last_date}
+    
+
+    IF    '${next_date}'!='${NULL}' and '${last_date}'=='${NULL}'
+        ${day}    Set Variable    ${next_date.split()[0]} 
+        ${hour}  Set Variable    ${next_date.split()[2]}
+        ${minute}    Set Variable    ${next_date.split()[4]}
+
+        ${time}    Set Variable If    '${minute}'=='0' and '${hour}'=='0'   ${NULL}    ${hour_d}:${calculated_minute}:${period}
+        ${date}    Set Variable If    '${day}'=='0'   ${NULL}    ${day_d} ${month} ${year}
+
+    ELSE IF    '${last_date}'!='${NULL}' and '${next_date}'=='${NULL}'
+        ${day}    Set Variable    ${last_date.split()[0]} 
+        ${hour}  Set Variable    ${last_date.split()[2]}
+        ${minute}    Set Variable    ${last_date.split()[4]}
+
+        ${time}    Set Variable If    '${minute}'=='0' and '${hour}'=='0'    ${NULL}    ${hour_d}:${calculated_minute}:${period}
+        ${date}    Set Variable If    '${day}'=='0'   ${NULL}    ${day_d} ${month} ${year}
+    ELSE IF    '${last_date}'=='${NULL}' and '${next_date}'=='${NULL}'
+        ${time}    Set Variable    ${NULL}
+        ${date}    Set Variable    ${NULL}
+    END
+
+    IF    '${new_title}'!='${NULL}'
+        Clear Text    locator=${input_reminder_title_locator}
+        Wait And Input Text    locator=${input_reminder_title_locator}   text=${new_title}    timeout=${timeout}
+    END
+
+    IF   '${check_toggle}'=='true' and '${toggle_minial_reminder_on}'=='${FALSE}'
+        Wait And Click Element    locator=${add_reminder_toggle_locator}    timeout=${timeout}
+        Wait And Click Element    locator=${next_add_reminder_button_locator}    timeout=${timeout}
+    END
+    
+    IF    '${date}'!='${NULL}' and '${time}'!='${NULL}' and '${toggle_minial_reminder_on}'=='${TRUE}'
+        Add Date    date=${date}
+        Add Time    time=${time}
+        Wait And Click Element    locator=${next_add_reminder_button_locator}    timeout=${timeout}
+    ELSE IF    '${date}'!='${NULL}' and '${time}'=='${NULL}' and '${toggle_minial_reminder_on}'=='${TRUE}'
+        Add Date    date=${date}
+        Wait And Click Element    locator=${next_add_reminder_button_locator}    timeout=${timeout}
+    ELSE IF    '${date}'=='${NULL}' and '${time}'!='${NULL}' and '${toggle_minial_reminder_on}'=='${TRUE}'
+        Add Time    time=${time}
+        Wait And Click Element    locator=${next_add_reminder_button_locator}    timeout=${timeout}
+    END
+    
+    RETURN    ${day_d}    ${month}    ${year}    ${hour_d}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}    
+    
+    
 
