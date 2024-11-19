@@ -31,6 +31,7 @@ minimal002
     ${day}    ${month}    ${year}    ${hour_d}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}    Add Mininal Reminder    title=Lotion    next_date=${NULL}     last_date=${NULL}   toggle_minial_reminder_on=${TRUE}    confirm=${TRUE} 
     ${added_full_time_reminder}    Set Variable    ${month} ${day}, ${year} ${SPACE}${calculated_hour}:00 ${period}
     Verify Landing Mininal Reminder Page    title=Lotion    there_is_reminder=${TRUE}    added_full_time_reminder=${added_full_time_reminder}
+    [Teardown]    Close Application
 
 minimal003
     [Documentation]    Add reminder case date=future, time=no, toggle=on
@@ -40,6 +41,7 @@ minimal003
     ${day}    ${month}    ${year}    ${hour_d}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}    Add Mininal Reminder    title=Dining    next_date=30 days 0 hours 0 minutes    last_date=${NULL}   toggle_minial_reminder_on=${TRUE}    confirm=${TRUE} 
     ${added_full_time_reminder}    Set Variable    ${month} ${day}, ${year} ${SPACE}${calculated_hour}:00 AM
     Verify Landing Mininal Reminder Page    title=Dining    there_is_reminder=${TRUE}    added_full_time_reminder=${added_full_time_reminder}
+    [Teardown]    Close Application
 
 minimal004
     [Documentation]    Add reminder case date=no, time=future, toggle=on
@@ -49,6 +51,7 @@ minimal004
     ${day}    ${month}    ${year}    ${hour}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}    Add Mininal Reminder    title=Running    next_date=0 days 1 hours 50 minutes    last_date=${NULL}   toggle_minial_reminder_on=${TRUE}    confirm=${TRUE} 
     ${added_full_time_reminder}    Set Variable    ${month} ${day}, ${year} ${SPACE}${hour}:${calculated_minute} ${period}
     Verify Landing Mininal Reminder Page    title=Running    there_is_reminder=${TRUE}    added_full_time_reminder=${added_full_time_reminder}
+    [Teardown]    Close Application
 
 minimal005
     [Documentation]    Add reminder case date=no, time=past, toggle=on
@@ -57,6 +60,7 @@ minimal005
     Verify Landing Mininal Reminder Page    there_is_reminder=${FALSE}
     ${day}    ${month}    ${year}    ${hour}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}    Add Mininal Reminder    title=Running    next_date=${NULL}    last_date=0 days 1 hours 50 minutes   toggle_minial_reminder_on=${TRUE}    confirm=${TRUE} 
     Verify Landing Mininal Reminder Page    there_is_reminder=${False}
+    [Teardown]    Close Application
 
 minimal006
     [Documentation]    Add reminder case date=past, time=past, toggle=on
@@ -65,6 +69,7 @@ minimal006
     Verify Landing Mininal Reminder Page    there_is_reminder=${FALSE}
     ${day}    ${month}    ${year}    ${hour}    ${minute}    ${calculated_hour}    ${calculated_minute}    ${period}    Add Mininal Reminder    title=Running    next_date=${NULL}    last_date=30 days 1 hours 50 minutes   toggle_minial_reminder_on=${TRUE}    confirm=${TRUE} 
     Verify Landing Mininal Reminder Page    there_is_reminder=${False}
+    [Teardown]    Close Application
 
 minimal007
     [Documentation]    Update reminder rename, toggle=off
@@ -105,7 +110,7 @@ minimal009
     [Teardown]    Close Application
 
 minimal010
-    [Documentation]    Update reminder, update date to future
+    [Documentation]    Update reminder, update date to future and delete
     [Tags]    case_10
     [Setup]    Open Application Set Up
     Verify Landing Mininal Reminder Page    there_is_reminder=${FALSE}

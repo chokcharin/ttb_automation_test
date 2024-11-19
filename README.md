@@ -14,4 +14,12 @@ python3 -m robot your_path/ttb_automation_test/testcase/web/herokuapp.robot
 # command ข้อ 3
 python3 -m robot your_path/ttb_automation_test/testcase/api/get_user.robot
 # command ข้อ 4
+
+${appium_server}     http://localhost:4723/wd/hub
+${platform_name}     Android
+${platform_version}     13
+${device_name}     Pixel 9 Pro
+${app_name}     /Users/513007542/Downloads/Minimal-Todo-master/app/app-release.apk
+${automation_name}     Uiautomator2
+
 python3 -m robot your_path/ttb_automation_test/testcase/mobile/minimal/minimal.robot
